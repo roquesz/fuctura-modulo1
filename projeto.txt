@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Controle de estoque
 
 Administradores
@@ -44,23 +43,3 @@ Vendas
  - Valor do produto
  - Qtde comprar
  - Data da Compra
-=======
-Sistema de concurso
-
-Concursos
-   - Aberto
-   - Em andamento
-   - Encerrada inscrição
-   	- Quantidade de vagas
-	- Cadastro de reserva
-
-Candidatos
-   - Pode se inscrever em vários concursos
-   - Geração boleto de pagamento PagSeguro
-   - Situação nos concursos
-   - Nota no concursos para classificação
-   - Foto
-   - Comprovante de inscrição
-
-Prova online
->>>>>>> fe8b0ebad087a83e14a81a4bb1de113d70651d2e
