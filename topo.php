@@ -5,6 +5,14 @@
     <head>
     	<title>Meu primeiro Hello World</title>
         <link href="css.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            function excluir(id)
+            {
+                if( confirm('Deseja remover o usuário?') ){
+                    location.href='excluir.php?id='+id;
+                }
+            }
+        </script>
     </head>
     <body>
         <ul>
