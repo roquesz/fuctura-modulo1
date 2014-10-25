@@ -15,12 +15,17 @@
                             Título do produto
                         </div>
                         <div class="panel-body">
-                            <div>Imagem do produto</div>
-                            <p>Descrição do produto</p>
+                            <a href="detalhe.php?id=">
+                                <div><img src="http://iacom.s8.com.br/produtos/01/00/item/118220/7/118220789G1.jpg" /></div>
+                                <p>Descrição do produto</p>
+                            </a>
                         </div>
                         <div class="panel-footer">
                             R$ 100,00
-                            <button type="button" class="btn btn-danger">Comprar</button>
+                            <form action="carrinho.php" method="post">
+                                <input type="hidden" name="id" value="" />
+                                <button class="btn btn-danger">Comprar</button>
+                            </form>
                         </div>
                     </div>
                 </div>                

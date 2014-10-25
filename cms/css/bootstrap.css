@@ -6201,3 +6201,8 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.fleft { float: left; }
+.box-img { float: left; padding-right: 10px; }
+.clear { clear: both; }
+.center { text-align: center; vertical-align: middle; }
