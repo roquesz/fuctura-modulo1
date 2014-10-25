@@ -45,12 +45,14 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <form role="form">
+                                    <form role="form" method="post" name="calfrete" id="calfrete" onsubmit="return false">
                                         <label>Calcular Frete</label>
-                                        <input type="number" class="form-control" required pattern="[0-9]{5}-[0-9]{3}" step="1" placeholder="Informe o CEP" maxlength="8">
+                                        <input type="text" id="cep_frete" name="cep_frete" class="form-control" required step="1" placeholder="Informe o CEP" maxlength="10">
                                         <button class="btn btn-default">Calcular</button><br />
                                     </form>
                                 </div>
+                            </div>
+                            <div class="col-lg-5" id="retorno_frete">
                             </div>
                         </div>
                     </div>
