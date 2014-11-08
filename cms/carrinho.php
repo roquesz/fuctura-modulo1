@@ -1,5 +1,17 @@
     <?php
         include("topo.php");
+        $id = $_POST['id'];
+        if (!is_numeric($id)){
+    ?>
+            <script type="text/javascript">
+                location.href = 'index.php';
+            </script>
+    <?php
+            exit();
+        }
+        if (!in_array($id, $_SESSION['carrinho'])){
+            
+        }
     ?>
             <div class="row">
                 <div class="col-lg-12">

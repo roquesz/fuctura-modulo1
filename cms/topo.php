@@ -1,3 +1,6 @@
+<?php
+    include("conexao.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +19,7 @@
 
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
