@@ -20,7 +20,7 @@
                             while($linha = $dados->fetch_assoc()){
                         ?>
                         <li>
-                            <a href="?cat_id=<?php echo $linha['cat_id'];?>"><i class="fa fa-dashboard fa-fw"></i> <?php echo $linha['cat_titulo'];?></a>
+                            <a href="index.php?cat_id=<?php echo $linha['cat_id'];?>"><i class="fa fa-dashboard fa-fw"></i> <?php echo $linha['cat_titulo'];?></a>
                         </li>
                         <?php
                             }

@@ -9,7 +9,7 @@
                         <div class="panel-body">
                             <h3>Cadastro de Produto</h3>
                             <div class="form-group">
-                                <form role="form" method="post" name="addcatgoria" id="addcatgoria" action="inserir_produto.php">
+                                <form role="form" method="post" name="addcatgoria" id="addcatgoria" action="inserir_produto.php"    
                                     <label>Nome do Produto</label>
                                     <input type="text" id="nome" name="nome" class="form-control" required placeholder="Informe o nome do Produto" maxlength="">
                                     <label>Descrição</label>
@@ -35,6 +35,15 @@
                                                 }
                                             ?>
                                         </select>
+                                    </div>
+                                    <label>Imagens do Produto</label>
+                                    <div class="form-group">
+                                        <label>Imagem 1</label>
+                                        <input type="file" name="imagem[]" />
+                                        <label>Imagem 2</label>
+                                        <input type="file" name="imagem[]" />
+                                        <label>Imagem 3</label>
+                                        <input type="file" name="imagem[]" />
                                     </div>
                                     <button class="btn btn-default">Cadastrar</button><br />
                                 </form>

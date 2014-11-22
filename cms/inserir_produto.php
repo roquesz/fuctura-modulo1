@@ -26,6 +26,18 @@
 			VALUES
 			('$nome', '$descricao', $valor, $estoque, $categoria)";
 	$gravou = $mysqli->query($sql);
+	$id = $mysqli->insert_id;
+	$imagens = $_FILES['imagem'];
+	if (count($imagens) > 0){
+		for ($i=0; $i < count($imagens['name']); $i++) { 
+			$ext = end(explode('.', $imagens['name'][$i]));
+			$nomeImagem = "ft-$id-$i.$ext";
+			move_uploaded_file($imagens['tmp_name'][$i], "img/".$nomeImagem);
+			$sqlImagem = "INSERT INTO imagens (pro_id, img_nome) VALUES ($id, '$nomeImagem')";
+			$mysqli->query($sqlImagem);
+		}
+	}
+
 	if($gravou == true){
 		$id = $mysqli->insert_id;
 		echo "Produto gravado com sucesso.";

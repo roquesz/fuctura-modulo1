@@ -2,6 +2,11 @@
         include("topo.php");
         $sql = "SELECT * FROM categorias";
         $dados = $mysqli->query($sql);
+
+        $id = $_GET['id'];
+        $sqlProdutos = "SELECT * FROM produtos WHERE pro_id = $id";
+        $dadosProduto = $mysqli->query($sqlProdutos);
+        $produto = $dadosProduto->fetch_assoc();
     ?>
             <div class="row">
                 <div class="col-lg-12">
@@ -11,7 +16,7 @@
                             <div class="form-group">
                                 <form role="form" method="post" name="addcatgoria" id="addcatgoria" action="inserir_produto.php">
                                     <label>Nome do Produto</label>
-                                    <input type="text" id="nome" name="nome" class="form-control" required placeholder="Informe o nome do Produto" maxlength="">
+                                    <input type="text" id="nome" name="nome" class="form-control" required placeholder="Informe o nome do Produto" maxlength="" value="">
                                     <label>Descrição</label>
                                     <textarea class="form-control" name="descricao" id="descricao" required rows="3"></textarea>
                                     <label>Valor</label>

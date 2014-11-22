@@ -8,7 +8,7 @@
         }
         if (isset($_GET['busca']) && !empty($_GET['busca'])){
             $busca = $_GET['busca'];
-            $sqlAdd .= " AND pro_titulo LIKE '%".$busca."%'";
+            $sqlAdd .= " AND pro_titulo LIKE '%$busca%'";
         }
     ?>
             <div class="row">
@@ -27,9 +27,19 @@
             <!-- /.row -->
             <div class="row">
                 <?php
-                    $sql = "SELECT * FROM produtos WHERE visivel = 1 ".$sqlAdd." ORDER BY RAND()";
+                    $sql = "select * from produtos 
+                            LEFT JOIN imagens ON produtos.pro_id = imagens.pro_id 
+                            WHERE visivel = 1 ".$sqlAdd." 
+                            GROUP BY produtos.pro_id
+                            ORDER BY RAND() 
+                             LIMIT 9";
                     $dados = $mysqli->query($sql);
                     while($produto = $dados->fetch_assoc()){
+                        if ($produto['img_nome'] == ''){
+                            $imagem = 'sem-imagem.png';
+                        } else {
+                            $imagem = $produto['img_nome'];
+                        }
                 ?>
                 <div class="col-lg-4">
                     <div class="panel panel-default">
@@ -38,8 +48,8 @@
                         </div>
                         <div class="panel-body">
                             <a href="detalhe.php?id=<?php echo $produto['pro_id'];?>">
-                                <div><img src="http://iacom.s8.com.br/produtos/01/00/item/118220/7/118220789G1.jpg" /></div>
-                                <p><?php echo $produto['pro_descricao'];?></p>
+                                <div><img src="img/<?php echo $imagem;?>" width="300" /></div>
+                                <p><?php echo substr(nl2br($produto['pro_descricao']), 0, 300);?>...</p>
                             </a>
                         </div>
                         <div class="panel-footer">
@@ -55,8 +65,7 @@
                     <?php
                         }
                         if ($dados->num_rows == 0){
-                ?>
-                    
+                ?>                    
                             <div class="alert alert-warning">
                                 Sem produtos para esta categoria.
                             </div>

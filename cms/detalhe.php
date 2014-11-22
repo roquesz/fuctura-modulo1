@@ -10,9 +10,18 @@
             exit();
         }
         
-        $sql = "SELECT * FROM produtos WHERE pro_id = ".$id;
+        $sql = "SELECT *
+                FROM produtos 
+                LEFT JOIN imagens ON produtos.pro_id = imagens.pro_id 
+                WHERE produtos.pro_id = $id GROUP BY produtos.pro_id";
+        echo $sql;
         $dados = $mysqli->query($sql);
         $produto = $dados->fetch_assoc();
+        if ($produto['img_nome'] == ''){
+            $imagem = 'sem-imagem.png';
+        } else {
+            $imagem = $produto['img_nome'];
+        }
     ?>
             <div class="row">
                 <div class="col-lg-12">
@@ -29,11 +38,11 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">                                        
                                     <div class="box-img">
-                                        <img src="http://iacom.s8.com.br/produtos/01/00/item/118220/7/118220789G1.jpg" />
+                                        <img src="img/<?php echo $imagem;?>" width="300" />
                                     </div>
                                     
                                     <div>
-                                        <?php echo $produto['pro_descricao'];?>
+                                        <?php echo nl2br($produto['pro_descricao']);?>
                                     </div>
                                     <br class="clear" />
                                     <br class="clear" />
@@ -65,8 +74,30 @@
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="galeria">
-                                    <h4>Home Tab</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <?php
+                                     $sql = "select * from imagens WHERE pro_id = $id
+                                                ORDER BY RAND() 
+                                                 LIMIT 9";
+                                        $dados = $mysqli->query($sql);
+                                        while($imagens = $dados->fetch_assoc()){
+                                            if ($imagens['img_nome'] == ''){
+                                                $imagem = 'sem-imagem.png';
+                                            } else {
+                                                $imagem = $imagens['img_nome'];
+                                            }
+                                    ?>      
+                                            <div class="col-lg-1">
+                                                <div class="panel panel-default">
+                                                    <div>
+                                                        <a href="javascript:;" onclick="alteraImagem('<?php echo $imagem;?>')">
+                                                            <img src="img/<?php echo $imagem;?>" width="50" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php
+                                        }
+                                    ?>
                                 </div>
                                 <div class="tab-pane fade" id="produtos">
                                     <h4></h4>
@@ -74,6 +105,11 @@
                                         $sql = "SELECT * FROM produtos WHERE cat_id = ".$produto['cat_id']." AND pro_id <> ".$id." ORDER BY RAND() LIMIT 3";
                                         $dados = $mysqli->query($sql);
                                         while($produto = $dados->fetch_assoc()){
+                                            if ($produto['img_nome'] == ''){
+                                                $imagem = 'sem-imagem.png';
+                                            } else {
+                                                $imagem = $produto['img_nome'];
+                                            }
                     
                                     ?>
                                     <div class="col-lg-4">
@@ -83,7 +119,7 @@
                                             </div>
                                             <div class="panel-body">
                                                 <a href="detalhe.php?id=<?php echo $produto['pro_id'];?>">
-                                                    <div><img src="http://iacom.s8.com.br/produtos/01/00/item/118220/7/118220789G1.jpg" /></div>
+                                                    <div><img src="img/<?php echo $imagem;?>" witdh="150" /></div>
                                                     <p><?php echo $produto['pro_descricao'];?></p>
                                                 </a>
                                             </div>
@@ -112,3 +148,9 @@
         <?php
             include("rodape.php");
         ?>
+        <script type="text/javascript">
+            function alteraImagem(imagem)
+            {
+                $(".box-img").find("img").attr("src", "img/"+imagem);
+            }
+        </script>
