@@ -10,11 +10,10 @@
             exit();
         }
         
-        $sql = "SELECT *
+        $sql = "SELECT produtos.*, imagens.img_nome
                 FROM produtos 
                 LEFT JOIN imagens ON produtos.pro_id = imagens.pro_id 
                 WHERE produtos.pro_id = $id GROUP BY produtos.pro_id";
-        echo $sql;
         $dados = $mysqli->query($sql);
         $produto = $dados->fetch_assoc();
         if ($produto['img_nome'] == ''){

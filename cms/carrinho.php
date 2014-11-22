@@ -1,17 +1,36 @@
     <?php
         include("topo.php");
+
+        if ($_GET['a'] == 1){
+            $contador = 0;
+            $qtd = $_POST['qtd'];
+            foreach($_SESSION['carrinho'] as $id => $produto){
+                $_SESSION['carrinho'][$id]['qtd'] = $qtd[$contador];
+                $contador++;
+            }
+        }
+        
         $id = $_POST['id'];
-        if (!is_numeric($id)){
-    ?>
-            <script type="text/javascript">
-                location.href = 'index.php';
-            </script>
-    <?php
-            exit();
+
+        if(!$_SESSION['carrinho']){
+            $_SESSION['carrinho'] = '';
+        }
+        if ($id != ''){
+            $sql = "SELECT * FROM produtos WHERE pro_id = $id";
+            $dados = $mysqli->query($sql);
+            $produto = $dados->fetch_assoc();
+            $qtd = 1;
+
+            $_SESSION['carrinho'][$id] = array('nome' => $produto['pro_titulo'], 
+                                               'preco' => $produto['pro_valor'],
+                                               'qtd' => $qtd);
         }
         if (!in_array($id, $_SESSION['carrinho'])){
             
         }
+        // echo '<pre>';
+        // print_r($_POST);
+        // exit();
     ?>
             <div class="row">
                 <div class="col-lg-12">
@@ -19,41 +38,66 @@
                         <div class="panel-body">
                             <h3>Meu Carrinho</h3>
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Produto(s)
-                                            </th>
-                                            <th class="center">
-                                                Quantidade
-                                            </th>
-                                            <th class="center">
-                                                Valor Unitário
-                                            </th>
-                                            <th class="center">
-                                                Valor Total
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>Nome do Produto</th>
-                                            <td class="center">
-                                                <button class="btn btn-default" type="button">-</button>
-                                                1
-                                                <button class="btn btn-default" type="button">+</button><br />
-                                                <button class="btn btn-link" type="button">Retirar da Cesta</button>
-                                            </td>
-                                            <td class="center">
-                                                R$ 100,00
-                                            </td>
-                                            <td class="center">
-                                                R$ 100,00
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <form action="?a=1" method="post">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Produto(s)
+                                                </th>
+                                                <th class="center">
+                                                    Quantidade
+                                                </th>
+                                                <th class="center">
+                                                    Valor Unitário
+                                                </th>
+                                                <th class="center">
+                                                    Valor Total
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                if (count($_SESSION['carrinho']) > 0){
+                                                    foreach ($_SESSION['carrinho'] as $id => $produto) {
+                                                        $totalProduto = $produto['qtd'] * $produto['preco'];
+                                                        $somaPedido += $totalProduto;
+                                            ?>
+                                            <tr>
+                                                <th><?php echo $produto['nome'];?></th>
+                                                <td class="center">
+                                                    <!--<button class="btn btn-default" type="button">-</button>
+                                                    1
+                                                    <button class="btn btn-default" type="button">+</button><br />-->
+                                                    <input type="number" min="1" name="qtd[]" value="<?php echo $produto['qtd'];?>" class="form-control" />
+                                                    <button class="btn btn-link" type="button">Retirar da Cesta</button>
+                                                </td>
+                                                <td class="center">
+                                                    R$ <?php echo $produto['preco'];?>
+                                                </td>
+                                                <td class="center">
+                                                    R$ <?php echo $totalProduto;?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                    }
+                                            ?>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td>Total do Pedido</td>
+                                                <td class="center">R$ <?php echo $somaPedido;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <button>Atualizar Carrinho</button>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </form>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">

@@ -27,7 +27,7 @@
             <!-- /.row -->
             <div class="row">
                 <?php
-                    $sql = "select * from produtos 
+                    $sql = "select produtos.*, imagens.img_nome from produtos 
                             LEFT JOIN imagens ON produtos.pro_id = imagens.pro_id 
                             WHERE visivel = 1 ".$sqlAdd." 
                             GROUP BY produtos.pro_id
