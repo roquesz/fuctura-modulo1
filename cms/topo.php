@@ -1,6 +1,7 @@
 <?php
     session_start();
     include("conexao.php");
+    include("funcoes.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

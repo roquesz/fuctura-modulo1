@@ -22,3 +22,13 @@ $(
         );
     }
 )
+
+function removerProdutoCarrinho(id)
+{
+    location.href="carrinho.php?idp="+id;
+}
+
+function finalizarCompra()
+{
+    location.href="finalizar_compra.php";
+}

@@ -1,6 +1,6 @@
     <?php
         include("topo.php");
-
+        $somaPedido = 0;
         if ($_GET['a'] == 1){
             $contador = 0;
             $qtd = $_POST['qtd'];
@@ -8,6 +8,10 @@
                 $_SESSION['carrinho'][$id]['qtd'] = $qtd[$contador];
                 $contador++;
             }
+        }
+
+        if (isset($_GET['idp'])){
+            unset($_SESSION['carrinho'][$_GET['idp']]);
         }
         
         $id = $_POST['id'];
@@ -70,13 +74,13 @@
                                                     1
                                                     <button class="btn btn-default" type="button">+</button><br />-->
                                                     <input type="number" min="1" name="qtd[]" value="<?php echo $produto['qtd'];?>" class="form-control" />
-                                                    <button class="btn btn-link" type="button">Retirar da Cesta</button>
+                                                    <button class="btn btn-link" type="button" onclick="removerProdutoCarrinho(<?php echo $id;?>)">Retirar da Cesta</button>
                                                 </td>
                                                 <td class="center">
-                                                    R$ <?php echo $produto['preco'];?>
+                                                    R$ <?php echo formatarValor($produto['preco']);?>
                                                 </td>
                                                 <td class="center">
-                                                    R$ <?php echo $totalProduto;?>
+                                                    R$ <?php echo formatarValor($totalProduto);?>
                                                 </td>
                                             </tr>
                                             <?php
@@ -85,7 +89,7 @@
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td>Total do Pedido</td>
-                                                <td class="center">R$ <?php echo $somaPedido;?></td>
+                                                <td class="center">R$ <?php echo formatarValor($somaPedido);?></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4">
@@ -108,9 +112,11 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-lg-5" id="retorno_frete">
-                            </div>
-                        </div>
+                            <div class="col-lg-5" id="retorno_frete"></div>
+                            <br clear="all" />
+                            <button class="btn btn-default" type="button" onclick="finalizarCompra()">
+                                Finalizar compra</button>
+                        </div>                        
                     </div>
                     </div>
                     <!-- /.panel -->

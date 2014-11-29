@@ -48,7 +48,7 @@
                                     <form action="carrinho.php" method="post">
                                         <input type="hidden" name="id" value="<?php echo $produto['pro_id'];?>" />
                                         <div class="panel-footer">
-                                            R$ <?php echo $produto['pro_valor'];?>                                        
+                                            R$ <?php echo formatarValor($produto['pro_valor']);?>
                                             <button class="btn btn-danger">Comprar</button>
                                         </div>
                                     </form>
@@ -123,7 +123,7 @@
                                                 </a>
                                             </div>
                                             <div class="panel-footer">
-                                                R$ <?php echo $produto['pro_valor'];?>
+                                                R$ <?php echo formatarValor($produto['pro_valor']);?>
                                                 <form action="carrinho.php" method="post">
                                                     <input type="hidden" name="id" value="<?php echo $produto['pro_id'];?>" />
                                                     <button class="btn btn-danger">Comprar</button>
