@@ -1,20 +1,24 @@
     <?php
         include("topo.php");
         $somaPedido = 0;
-        if ($_GET['a'] == 1){
-            $contador = 0;
-            $qtd = $_POST['qtd'];
-            foreach($_SESSION['carrinho'] as $id => $produto){
-                $_SESSION['carrinho'][$id]['qtd'] = $qtd[$contador];
-                $contador++;
+        if (isset($_GET['a'])){
+            if ($_GET['a'] == 1){
+                $contador = 0;
+                $qtd = $_POST['qtd'];
+                foreach($_SESSION['carrinho'] as $id => $produto){
+                    $_SESSION['carrinho'][$id]['qtd'] = $qtd[$contador];
+                    $contador++;
+                }
             }
         }
 
         if (isset($_GET['idp'])){
             unset($_SESSION['carrinho'][$_GET['idp']]);
         }
-        
-        $id = $_POST['id'];
+        $id = '';
+        if (isset($_POST['id'])){
+            $id = $_POST['id'];
+        }
 
         if(!$_SESSION['carrinho']){
             $_SESSION['carrinho'] = '';
@@ -29,18 +33,15 @@
                                                'preco' => $produto['pro_valor'],
                                                'qtd' => $qtd);
         }
-        if (!in_array($id, $_SESSION['carrinho'])){
-            
-        }
-        // echo '<pre>';
-        // print_r($_POST);
-        // exit();
     ?>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <h3>Meu Carrinho</h3>
+                            <?php
+                                if (is_array($_SESSION['carrinho'])){
+                            ?>
                             <div class="table-responsive">
                                 <form action="?a=1" method="post">
                                     <table class="table table-bordered table-striped">
@@ -62,7 +63,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                                if (count($_SESSION['carrinho']) > 0){
+                                                if (is_array($_SESSION['carrinho'])){
                                                     foreach ($_SESSION['carrinho'] as $id => $produto) {
                                                         $totalProduto = $produto['qtd'] * $produto['preco'];
                                                         $somaPedido += $totalProduto;
@@ -115,7 +116,14 @@
                             <div class="col-lg-5" id="retorno_frete"></div>
                             <br clear="all" />
                             <button class="btn btn-default" type="button" onclick="finalizarCompra()">
-                                Finalizar compra</button>
+                            Finalizar compra</button>
+                            <?php
+                                } else {
+                            ?>
+                                <div>Carrinho vazio</div>
+                            <?php
+                                }
+                            ?>
                         </div>                        
                     </div>
                     </div>

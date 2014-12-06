@@ -28,6 +28,7 @@
 					  <input type="hidden" name="peso_'.$i.'" value="0" />
 					  ';
 		$i++;
+		
 	}
 ?>
 		<div class="row">
