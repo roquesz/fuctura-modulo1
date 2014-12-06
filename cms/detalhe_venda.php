@@ -10,38 +10,24 @@
             exit();
         }
 
-        $offset = 3;
-        $limit = 0;
+        $data = $_GET['data'];
+        $cli_id = $_GET['cli_id'];
 
-        if ($_GET['limit']){
-        	$limit = $_GET['limit'] * $offset;
-        }
-
-        $sql = "SELECT clientes.cli_id, clientes.cli_nome, vendas.ven_data, 
-        		sum( vendas.pro_valor * vendas.ved_qtd ) AS valor_venda
+        $sql = "SELECT clientes.cli_nome, vendas.ven_data, 
+        		vendas.ved_qtd, produtos.pro_titulo
 				FROM vendas
 				INNER JOIN clientes ON vendas.cli_id = clientes.cli_id
-				GROUP BY clientes.cli_nome, vendas.ven_data
-				ORDER BY vendas.ven_data DESC";
-		$total = $mysqli->query($sql);
-		
-        $sql = "SELECT clientes.cli_id, clientes.cli_nome, vendas.ven_data, 
-        		sum( vendas.pro_valor * vendas.ved_qtd ) AS valor_venda
-				FROM vendas
-				INNER JOIN clientes ON vendas.cli_id = clientes.cli_id
-				GROUP BY clientes.cli_nome, vendas.ven_data
-				ORDER BY vendas.ven_data DESC
-				LIMIT $limit, $offset";
+				INNER JOIN produtos ON produtos.pro_id = vendas.pro_id
+				WHERE clientes.cli_id = $cli_id
+				AND vendas.ven_data = '$data'";
 
 		$dados = $mysqli->query($sql);
-		
-		$paginacao = ceil($total->num_rows / $offset);
 ?>
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Vendas
+                            Detalhe Vendas
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -51,8 +37,8 @@
                                         <tr>
                                             <th>Cliente</th>
                                             <th>Data Compra</th>
-                                            <th>Valor</th>
-                                            <th>Ações</th>
+                                            <th>QTD</th>
+                                            <th>Produto</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,10 +49,10 @@
                                             <td><?php echo $linha['cli_nome'];?></td>
                                             <td><?php echo formatarData($linha['ven_data']);?></td>
                                             <td>
-                                                R$ <?php echo formatarValor($linha['valor_venda']);?>
+                                                <?php echo $linha['ved_qtd'];?>
                                             </td>
                                             <td>
-                                                <a href="detalhe_venda.php?cli_id=<?php echo $linha['cli_id']?>&data=<?php echo $linha['ven_data'];?>">Detalhe</a>
+                                            	<?php echo $linha['pro_titulo'];?>
                                             </td>
                                         </tr>
                                     <?php
@@ -74,17 +60,6 @@
                                     ?>
                                         </tbody>
                                 </table>
-                                <ul class="pagination">
-                                <?php
-                                	for($pg = 1; $pg <= $paginacao; $pg++){
-                                ?>
-                                	<li>
-                                		<a href="?limit=<?php echo $pg - 1;?>"><?php echo $pg;?></a>
-                                	</li>
-                                <?php
-                                	}
-                                ?>
-                            	</ul>
                             </div>
                         </div>
                         <!-- /.panel-body -->
