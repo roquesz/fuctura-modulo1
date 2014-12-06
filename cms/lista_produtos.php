@@ -1,5 +1,13 @@
     <?php
         include("topo.php");
+        if ($_SESSION['login']['perfil'] != 1){
+    ?>
+        <script type="text/javascript">
+            location.href='login.php';
+        </script>
+    <?php
+            exit();
+        }
         if(isset($_GET['id']) && isset($_GET['acao'])){
             $id = $_GET['id'];
             $acao = $_GET['acao'];

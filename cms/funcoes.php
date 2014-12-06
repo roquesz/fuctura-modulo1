@@ -11,4 +11,10 @@
 		return $valor;
 	}
 
+	function formatarData($data)
+	{
+		$data = date("d/m/Y", strtotime($data));
+		return $data;
+	}
+
 ?>
